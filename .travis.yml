@@ -11,7 +11,8 @@ script:
   - scripts/test
   - npx codecov
 deploy:
-  provider: script
-  script: scrtips/release.sh
+  provider: npm
+  email: "david.ng.dev@gmail.com"
+  api_key: $NPM_TOKEN
   on:
-    branch: master
+    tags: true

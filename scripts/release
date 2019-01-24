@@ -2,4 +2,3 @@
 
 yarn release
 git push --follow-tags origin master
-npm publish
