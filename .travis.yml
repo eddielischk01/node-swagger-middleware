@@ -13,5 +13,4 @@ deploy:
   provider: script
   script: scrtips/release.sh
   on:
-    all_branches: true
-    condition: $TRAVIS_BRANCH =~ ^staging|production$
+    branch: master
