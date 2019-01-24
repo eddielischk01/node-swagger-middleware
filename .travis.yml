@@ -9,3 +9,9 @@ install:
 script:
   - scripts/lint
   - scripts/test
+deploy:
+  provider: script
+  script: scrtips/release.sh
+  on:
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^staging|production$
