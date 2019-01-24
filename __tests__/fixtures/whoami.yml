@@ -1,0 +1,45 @@
+swagger: "2.0"
+info:
+  title: Example of middleware for intergrate express + sway
+  version: 1.0.0
+paths:
+  /whoami:
+    get:
+      parameters:
+        - in: query
+          name: name
+          required: true
+          type: string
+      responses:
+        200:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              purpose:
+                type: string
+              whoareyou:
+                type: string
+  /response-schema-mismatch:
+    get:
+      parameters:
+        - in: query
+          name: name
+          required: true
+          type: string
+      responses:
+        200:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              purpose:
+                type: string
+              whoareyou:
+                type: string
+              missingData:
+                type: string
+            required:
+              - missingData
