@@ -3,6 +3,7 @@
 [![codecov](https://codecov.io/gh/davidNHK/node-swagger-middleware/branch/development/graph/badge.svg)](https://codecov.io/gh/davidNHK/node-swagger-middleware)
 [![Build Status](https://travis-ci.org/davidNHK/node-swagger-middleware.svg?branch=development)](https://travis-ci.org/davidNHK/node-swagger-middleware)
 [![npm version](https://badge.fury.io/js/node-swagger-middleware.svg)](https://badge.fury.io/js/node-swagger-middleware)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 Project on top of [sway](https://github.com/apigee-127/sway) and [swagger-combine](https://github.com/maxdome/swagger-combine)
 to provide middleware for express / koa request/response validate 
