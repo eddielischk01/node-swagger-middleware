@@ -21,10 +21,10 @@ describe("Test Express Middleware", () => {
     expect(response.status).toEqual(200)
   })
 
-  test.skip("Get a path has described on OpenAPI but response schema not match", async () => {
+  test("Get a path has described on OpenAPI but response schema not match", async () => {
     const response = await request(app).get(
       "/v1/response-schema-mismatch?name=davidng"
-    ) // Not work
+    )
     expect(response.status).toEqual(400)
   })
 })

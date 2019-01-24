@@ -12,52 +12,56 @@ module.exports.createExpressMiddleware = async (
     definition: combinedContent,
     ...swayOptions
   })
-  return (req, res, next) => {
+  return async (req, res, next) => {
     const { method, path } = req
     const routeSpec = apiSpec.getOperation(req)
     if (routeSpec === undefined) {
       debug(`No matched spec found for ${method} ${path}`)
       return next()
     }
-    checkValidationResult(routeSpec.validateRequest(req))
-    getResponseContent(res)
-      .then(responseBody => {
-        checkValidationResult(
-          routeSpec.validateResponse({
-            body: responseBody,
-            headers: { ...res.getHeaders() },
-            statusCode: res.statusCode
-          })
-        )
-      })
-      .catch(e => {
-        debug(`What happened? ${e}`)
-      })
-    next()
+    wrapResponse(routeSpec, res, next)
+    try {
+      checkValidationResult(routeSpec.validateRequest(req))
+      next()
+    } catch (e) {
+      next(e)
+    }
   }
 }
 
-function getResponseContent(res) {
-  return new Promise((resolve, reject) => {
-    const { write: oldWrite, end: oldEnd } = res
+function wrapResponse(routeSpec, res, next) {
+  const { write: oldWrite, end: oldEnd } = res
 
-    const chunks = []
+  const chunks = []
 
-    res.write = function(chunk) {
-      chunks.push(chunk)
-      oldWrite.apply(res, arguments)
+  res.write = function(chunk) {
+    chunks.push(chunk)
+  }
+
+  res.end = function(chunk, encoding) {
+    if (chunk) chunks.push(chunk)
+    res.write = oldWrite
+    res.end = oldEnd
+    let data
+    try {
+      data = Buffer.concat(chunks)
+    } catch (e) {
+      data = chunk
     }
-
-    res.end = function(chunk) {
-      if (chunk) chunks.push(chunk)
-      oldEnd.apply(res, arguments)
-      try {
-        resolve(Buffer.concat(chunks))
-      } catch (e) {
-        reject(e)
-      }
+    try {
+      checkValidationResult(
+        routeSpec.validateResponse({
+          body: data,
+          headers: { ...res.getHeaders() },
+          statusCode: res.statusCode,
+          encoding: encoding
+        })
+      )
+      res.end(data, encoding)
+    } catch (e) {
+      next(e)
     }
-  })
+  }
 }
 
 function checkValidationResult(validationResult) {
