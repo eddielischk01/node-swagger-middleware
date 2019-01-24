@@ -26,7 +26,7 @@ describe("Test KOA Middleware", () => {
   test("Get a path has described on OpenAPI but response schema not match", async () => {
     const response = await request(app.callback()).get(
       "/v1/response-schema-mismatch?name=davidng"
-    ) // Not work
+    )
     expect(response.status).toEqual(400)
   })
 })
