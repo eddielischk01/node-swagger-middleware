@@ -9,6 +9,7 @@ install:
 script:
   - scripts/lint
   - scripts/test
+  - npx codecov
 deploy:
   provider: script
   script: scrtips/release.sh
