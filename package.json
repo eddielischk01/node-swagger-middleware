@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "jest --coverage",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "release": "standard-version"
   },
   "dependencies": {
     "debug": "^4.1.1",
@@ -36,6 +37,7 @@
     "koa-router": "^7.4.0",
     "lint-staged": "^8.1.0",
     "prettier": "^1.16.1",
+    "standard-version": "^4.4.0",
     "supertest": "^3.4.2"
   },
   "husky": {
