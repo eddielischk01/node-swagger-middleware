@@ -50,7 +50,3 @@ createKoaApp = async function() {
   return app
 }
 ```
-
-
-# Limitation
-Express middleware didn't support response validate as this moment
