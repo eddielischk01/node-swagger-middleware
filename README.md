@@ -4,7 +4,7 @@ Project on top of [sway](https://github.com/apigee-127/sway) and [swagger-combin
 to provide middleware for express / koa request/response validate 
 
 # Example Usage
-Express
+Express [Example App](./__tests__/expressApp.js)
 ```js
 const express = require("express")
 const { createExpressMiddleware, ValidationError } = require("node-swagger-middleware")
@@ -27,7 +27,7 @@ createExpressApp = async () => {
 }
 ```
 
-Koa
+Koa [Example App](./__tests__/koaApp.js)
 ```js
 const { createExpressMiddleware, ValidationError } = require("node-swagger-middleware")
 const Koa = require("koa")
