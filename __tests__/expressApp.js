@@ -1,11 +1,16 @@
 const express = require("express")
 const { createExpressMiddleware } = require("../src")
-const { ValidationError } = require("../src/errors")
+const { ValidationError, SpecNotFoundError } = require("../src/errors")
 
-module.exports.createExpressApp = async () => {
+module.exports.createExpressApp = async middlewareOptions => {
   const app = express()
   app.use(express.json())
-  app.use(await createExpressMiddleware(`${__dirname}/fixtures/index.yml`))
+  app.use(
+    await createExpressMiddleware(
+      `${__dirname}/fixtures/index.yml`,
+      middlewareOptions
+    )
+  )
   app.get("/v1/whoami", (req, res) => {
     const { name } = req.query
     res.send({
@@ -28,6 +33,8 @@ module.exports.createExpressApp = async () => {
   app.use((err, req, res, next) => {
     if (err instanceof ValidationError) {
       res.status(400)
+    } else if (err instanceof SpecNotFoundError) {
+      res.status(404)
     } else {
       res.status(500)
     }

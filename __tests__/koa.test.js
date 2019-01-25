@@ -18,9 +18,19 @@ describe("Test KOA Middleware", () => {
     expect(response.status).toEqual(400)
   })
 
-  test("Get a path not described on OpenAPI", async () => {
+  test("Get a path not described on OpenAPI in not strictMode", async () => {
     const response = await request(app.callback()).get("/echo")
     expect(response.status).toEqual(200)
+  })
+
+  test("Get a path not described on OpenAPI in strictMode", async () => {
+    const app = await createKoaApp({
+      middlewareOptions: {
+        strictMode: true
+      }
+    })
+    const response = await request(app.callback()).get("/echo")
+    expect(response.status).toEqual(404)
   })
 
   test("Get a path has described on OpenAPI but response schema not match", async () => {
