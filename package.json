@@ -1,6 +1,6 @@
 {
   "name": "node-swagger-middleware",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "src/index.js",
   "typings": "./index.d.ts",
   "author": "David Ng <davidng@hk01.com>",
