@@ -8,6 +8,11 @@
 Project on top of [sway](https://github.com/apigee-127/sway) and [swagger-combine](https://github.com/maxdome/swagger-combine)
 to provide middleware for express / koa request/response validate 
 
+# Installation
+```
+yarn add node-swagger-middleware
+```
+
 # Example Usage
 Express [Example App](./__tests__/expressApp.js)
 ```js
@@ -55,3 +60,7 @@ createKoaApp = async function() {
   return app
 }
 ```
+
+# TODO
+
+Add type.d.ts
