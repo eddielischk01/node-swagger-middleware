@@ -1,10 +1,9 @@
 const Koa = require("koa")
-const bodyParser = require("koa-bodyparser")
 const Router = require("koa-router")
 const { createKoaMiddleware } = require("../src")
-const { ValidationError } = require("../src/errors")
+const { ValidationError, SpecNotFoundError } = require("../src/errors")
 
-module.exports.createKoaApp = async function() {
+module.exports.createKoaApp = async middlewareOptions => {
   const app = new Koa()
   const router = new Router()
   router.get("/v1/whoami", ctx => {
@@ -26,7 +25,6 @@ module.exports.createKoaApp = async function() {
   router.get("/echo", ctx => {
     ctx.body = {}
   })
-  app.use(bodyParser())
   app.use(async (ctx, next) => {
     try {
       await next()
@@ -34,12 +32,19 @@ module.exports.createKoaApp = async function() {
       if (e instanceof ValidationError) {
         ctx.status = 400
         ctx.body = { message: e.message }
+      } else if (e instanceof SpecNotFoundError) {
+        ctx.status = 404
       } else {
         throw e
       }
     }
   })
-  app.use(await createKoaMiddleware(`${__dirname}/fixtures/index.yml`))
+  app.use(
+    await createKoaMiddleware(
+      `${__dirname}/fixtures/index.yml`,
+      middlewareOptions
+    )
+  )
   app.use(router.routes())
   app.use(router.allowedMethods())
   return app

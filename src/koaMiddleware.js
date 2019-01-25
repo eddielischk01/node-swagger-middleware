@@ -1,12 +1,19 @@
 const debug = require("debug")
 const swaggerCombine = require("swagger-combine")
 const sway = require("sway")
-const { ValidationError } = require("./errors")
+const { ValidationError, SpecNotFoundError } = require("./errors")
 
 module.exports.createKoaMiddleware = async (
   swaggerIndexFile,
-  swayOptions = {} // https://github.com/apigee-127/sway/blob/master/docs/API.md#swaycreateoptions--object
+  options = {
+    swayOptions: {}, // https://github.com/apigee-127/sway/blob/master/docs/API.md#swaycreateoptions--object
+    middlewareOptions: {
+      strictMode: false
+    }
+  }
 ) => {
+  const { swayOptions, middlewareOptions } = options
+  const { strictMode } = middlewareOptions
   const combinedContent = await swaggerCombine(swaggerIndexFile)
   const apiSpec = await sway.create({
     definition: combinedContent,
@@ -16,8 +23,12 @@ module.exports.createKoaMiddleware = async (
     const { method, path } = ctx
     const routeSpec = apiSpec.getOperation(ctx.req)
     if (!routeSpec) {
-      debug(`No matched spec found for ${method} ${path}`)
-      return next()
+      if (strictMode) {
+        throw new SpecNotFoundError(method, path)
+      } else {
+        debug(`No matched spec found for ${method} ${path}`)
+        return next()
+      }
     }
     checkValidationResult(routeSpec.validateRequest(ctx.request))
     await next()
