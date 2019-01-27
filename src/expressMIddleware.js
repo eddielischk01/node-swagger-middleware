@@ -7,12 +7,23 @@ module.exports.createExpressMiddleware = async (
   swaggerIndexFile,
   options = {
     swayOptions: {}, // https://github.com/apigee-127/sway/blob/master/docs/API.md#swaycreateoptions--object
+    swayValidateRequestOptions: {
+      strictMode: true
+    },
+    swayValidateResponseOptions: {
+      strictMode: false
+    },
     middlewareOptions: {
       strictMode: false
     }
   }
 ) => {
-  const { swayOptions, middlewareOptions } = options
+  const {
+    swayOptions,
+    middlewareOptions,
+    swayValidateRequestOptions,
+    swayValidateResponseOptions
+  } = options
   const { strictMode } = middlewareOptions
   const combinedContent = await swaggerCombine(swaggerIndexFile)
   const apiSpec = await sway.create({
@@ -30,9 +41,18 @@ module.exports.createExpressMiddleware = async (
         return next()
       }
     }
-    wrapResponse(routeSpec, res, next)
+    wrapResponse(
+      {
+        spec: routeSpec,
+        responseValidateOptions: swayValidateResponseOptions
+      },
+      res,
+      next
+    )
     try {
-      checkValidationResult(routeSpec.validateRequest(req))
+      checkValidationResult(
+        routeSpec.validateRequest(req, swayValidateRequestOptions)
+      )
       next()
     } catch (e) {
       next(e)
@@ -41,6 +61,7 @@ module.exports.createExpressMiddleware = async (
 }
 
 function wrapResponse(routeSpec, res, next) {
+  const { spec, responseValidateOptions } = routeSpec
   const { write: oldWrite, end: oldEnd } = res
 
   const chunks = []
@@ -61,12 +82,15 @@ function wrapResponse(routeSpec, res, next) {
     }
     try {
       checkValidationResult(
-        routeSpec.validateResponse({
-          body: data,
-          headers: { ...res.getHeaders() },
-          statusCode: res.statusCode,
-          encoding: encoding
-        })
+        spec.validateResponse(
+          {
+            body: data,
+            headers: { ...res.getHeaders() },
+            statusCode: res.statusCode,
+            encoding: encoding
+          },
+          responseValidateOptions
+        )
       )
       res.end(data, encoding)
     } catch (e) {

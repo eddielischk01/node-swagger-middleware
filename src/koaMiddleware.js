@@ -7,12 +7,23 @@ module.exports.createKoaMiddleware = async (
   swaggerIndexFile,
   options = {
     swayOptions: {}, // https://github.com/apigee-127/sway/blob/master/docs/API.md#swaycreateoptions--object
+    swayValidateRequestOptions: {
+      strictMode: true
+    },
+    swayValidateResponseOptions: {
+      strictMode: false
+    },
     middlewareOptions: {
       strictMode: false
     }
   }
 ) => {
-  const { swayOptions, middlewareOptions } = options
+  const {
+    swayOptions,
+    middlewareOptions,
+    swayValidateRequestOptions,
+    swayValidateResponseOptions
+  } = options
   const { strictMode } = middlewareOptions
   const combinedContent = await swaggerCombine(swaggerIndexFile)
   const apiSpec = await sway.create({
@@ -30,14 +41,18 @@ module.exports.createKoaMiddleware = async (
         return next()
       }
     }
-    checkValidationResult(routeSpec.validateRequest(ctx.request))
+    checkValidationResult(
+      routeSpec.validateRequest(ctx.request, swayValidateRequestOptions)
+    )
     await next()
     const responseWrapper = {
       body: ctx.response.body,
       headers: ctx.response.headers,
       statusCode: ctx.status
     }
-    checkValidationResult(routeSpec.validateResponse(responseWrapper))
+    checkValidationResult(
+      routeSpec.validateResponse(responseWrapper, swayValidateResponseOptions)
+    )
   }
 }
 
