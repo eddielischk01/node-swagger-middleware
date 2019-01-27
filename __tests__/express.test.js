@@ -4,7 +4,21 @@ const { createExpressApp } = require("./expressApp")
 describe("Test Express Middleware", () => {
   let app
   beforeEach(async () => {
-    app = await createExpressApp()
+    app = await createExpressApp({
+      swayValidateRequestOptions: {
+        strictMode: {
+          formData: true,
+          query: true,
+          header: false
+        }
+      },
+      swayValidateResponseOptions: {
+        strictMode: false
+      },
+      middlewareOptions: {
+        strictMode: false
+      }
+    })
   })
   test("Get a path has described on OpenAPI", async () => {
     const response = await request(app).get("/v1/whoami?name=davidng")
