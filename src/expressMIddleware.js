@@ -35,11 +35,10 @@ module.exports.createExpressMiddleware = async (
     const routeSpec = apiSpec.getOperation(req)
     if (!routeSpec) {
       if (strictMode) {
-        next(new SpecNotFoundError(method, path))
-      } else {
-        debug(`No matched spec found for ${method} ${path}`)
-        return next()
+        return next(new SpecNotFoundError(method, path))
       }
+      debug(`No matched spec found for ${method} ${path}`)
+      return next()
     }
     wrapResponse(
       {
