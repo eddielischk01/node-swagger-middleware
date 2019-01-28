@@ -10,7 +10,7 @@
     "url": "https://github.com/davidNHK/node-swagger-middleware"
   },
   "engines": {
-    "node": ">=8.14.0"
+    "node": ">=8.0.0"
   },
   "scripts": {
     "test": "jest --coverage",
