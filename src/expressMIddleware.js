@@ -80,17 +80,20 @@ function wrapResponse(routeSpec, res, next) {
       data = chunk
     }
     try {
-      checkValidationResult(
-        spec.validateResponse(
-          {
-            body: data,
-            headers: { ...res.getHeaders() },
-            statusCode: res.statusCode,
-            encoding: encoding
-          },
-          responseValidateOptions
+      const pathSpec = spec.getResponse(res.statusCode)
+      if (pathSpec) {
+        checkValidationResult(
+          pathSpec.validateResponse(
+            {
+              body: data,
+              headers: { ...res.getHeaders() },
+              statusCode: res.statusCode,
+              encoding: encoding
+            },
+            responseValidateOptions
+          )
         )
-      )
+      }
       res.end(data, encoding)
     } catch (e) {
       next(e)
