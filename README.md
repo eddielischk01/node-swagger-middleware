@@ -6,7 +6,7 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 Project on top of [sway](https://github.com/apigee-127/sway) and [swagger-combine](https://github.com/maxdome/swagger-combine)
-to provide middleware for express / koa request/response validate 
+to provide middleware for express request/response validate 
 
 # Installation
 ```
@@ -37,30 +37,6 @@ createExpressApp = async () => {
 }
 ```
 
-Koa [Example App](./__tests__/koaApp.js)
-```js
-const { createExpressMiddleware, ValidationError } = require("node-swagger-middleware")
-const Koa = require("koa")
-createKoaApp = async function() {
-  const app = new Koa()
-  const swaggerIndexFile = `${__dirname}/fixtures/index.yml`
-  app.use(async (ctx, next) => {
-    try {
-      await next()
-    } catch (e) {
-      if (e instanceof ValidationError) {
-        ctx.status = 400
-        ctx.body = { message: e.message }
-      } else {
-        throw e
-      }
-    }
-  })
-  app.use(await createKoaMiddleware(swaggerIndexFile))
-  return app
-}
-```
-
 # TODO
 
-Add type.d.ts
+Support default value, type casing on request parameters

@@ -43,3 +43,24 @@ paths:
                 type: string
             required:
               - missingData
+  /response-schema-extra-data:
+    get:
+      parameters:
+        - in: query
+          name: name
+          required: true
+          type: string
+      responses:
+        200:
+          schema:
+            type: object
+            properties:
+              meta:
+                type: object
+                properties:
+                  status:
+                    type: number
+                additionalProperties: false
+              whoareyou:
+                type: string
+            additionalProperties: false

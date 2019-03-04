@@ -149,6 +149,34 @@
   dependencies:
     find-up "^2.1.0"
 
+"@dng/eslint-config-dng-style@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@dng/eslint-config-dng-style/-/eslint-config-dng-style-0.1.0.tgz#df230023f0a1f6930e10d43c3743b83888f2a783"
+  integrity sha512-ImYEG4823TxS8Tk+jkbWahYP81yrc2+Nnthfd08QMCRaClC2rtUbDh3fkRmBpQWiKHUIbjujGhOqjSx6yBjirg==
+  dependencies:
+    eslint-config-prettier "^4.0.0"
+    eslint-config-standard "^12.0.0"
+    eslint-plugin-import "^2.16.0"
+    eslint-plugin-jest "^22.3.0"
+    eslint-plugin-node "^8.0.1"
+    eslint-plugin-prettier "^3.0.1"
+    eslint-plugin-promise "^4.0.1"
+    eslint-plugin-standard "^4.0.0"
+
+"@dng/eslint-config-opinionated@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@dng/eslint-config-opinionated/-/eslint-config-opinionated-0.2.0.tgz#abc1f5555ef88ea508ba12313c371db1ee389aa8"
+  integrity sha512-6kM2b/HYA9oSIG7o8qsRULBIclPWm86vFok25junEL1y+6Ps6R52453Ft03A2wE/FntKpTHaKgsVlTNyKd6JSg==
+  dependencies:
+    eslint-config-prettier "^4.0.0"
+    eslint-config-standard "^12.0.0"
+    eslint-plugin-import "^2.16.0"
+    eslint-plugin-jest "^22.3.0"
+    eslint-plugin-node "^8.0.1"
+    eslint-plugin-prettier "^3.0.1"
+    eslint-plugin-promise "^4.0.1"
+    eslint-plugin-standard "^4.0.0"
+
 "@iamstarkov/listr-update-renderer@0.4.1":
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/@iamstarkov/listr-update-renderer/-/listr-update-renderer-0.4.1.tgz#d7c48092a2dcf90fd672b6c8b458649cb350c77e"
@@ -242,6 +270,16 @@ ajv@^6.5.3, ajv@^6.5.5, ajv@^6.6.1:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.7.0.tgz#e3ce7bb372d6577bb1839f1dfdfcbf5ad2948d96"
   integrity sha512-RZXPviBTtfmtka9n9sy1N5M5b82CbxWIR6HIis4s3WQTXDJamc/0gpCWNGz6EWdWp4DOfjzJfhz/AS9zVPjjWg==
+  dependencies:
+    fast-deep-equal "^2.0.1"
+    fast-json-stable-stringify "^2.0.0"
+    json-schema-traverse "^0.4.1"
+    uri-js "^4.2.2"
+
+ajv@^6.9.2:
+  version "6.9.2"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.9.2.tgz#4927adb83e7f48e5a32b45729744c71ec39c9c7b"
+  integrity sha512-4UFy0/LgDo7Oa/+wOAlj44tp9K78u38E5/359eSrqEp1Z5PdVfimCcs7SluXMP755RUQu6d2b4AvF0R1C9RZjg==
   dependencies:
     fast-deep-equal "^2.0.1"
     fast-json-stable-stringify "^2.0.0"
@@ -1693,6 +1731,13 @@ eslint-config-prettier@^3.6.0:
   dependencies:
     get-stdin "^6.0.0"
 
+eslint-config-prettier@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-4.1.0.tgz#181364895899fff9fd3605fecb5c4f20e7d5f395"
+  integrity sha512-zILwX9/Ocz4SV2vX7ox85AsrAgXV3f2o2gpIicdMIOra48WYqgUnWNH/cR/iHtmD2Vb3dLSC3LiEJnS05Gkw7w==
+  dependencies:
+    get-stdin "^6.0.0"
+
 eslint-config-standard@^12.0.0:
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-12.0.0.tgz#638b4c65db0bd5a41319f96bba1f15ddad2107d9"
@@ -1737,6 +1782,27 @@ eslint-plugin-import@^2.15.0:
     minimatch "^3.0.4"
     read-pkg-up "^2.0.0"
     resolve "^1.9.0"
+
+eslint-plugin-import@^2.16.0:
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.16.0.tgz#97ac3e75d0791c4fac0e15ef388510217be7f66f"
+  integrity sha512-z6oqWlf1x5GkHIFgrSvtmudnqM6Q60KM4KvpWi5ubonMjycLjndvd5+8VAZIsTlHC03djdgJuyKG6XO577px6A==
+  dependencies:
+    contains-path "^0.1.0"
+    debug "^2.6.9"
+    doctrine "1.5.0"
+    eslint-import-resolver-node "^0.3.2"
+    eslint-module-utils "^2.3.0"
+    has "^1.0.3"
+    lodash "^4.17.11"
+    minimatch "^3.0.4"
+    read-pkg-up "^2.0.0"
+    resolve "^1.9.0"
+
+eslint-plugin-jest@^22.3.0:
+  version "22.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-22.3.0.tgz#a10f10dedfc92def774ec9bb5bfbd2fb8e1c96d2"
+  integrity sha512-P1mYVRNlOEoO5T9yTqOfucjOYf1ktmJ26NjwjH8sxpCFQa6IhBGr5TpKl3hcAAT29hOsRJVuMWmTsHoUVo9FoA==
 
 eslint-plugin-node@^8.0.1:
   version "8.0.1"

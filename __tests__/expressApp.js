@@ -1,6 +1,11 @@
 const express = require("express")
-const { createExpressMiddleware } = require("../src")
-const { ValidationError, SpecNotFoundError } = require("../src/errors")
+
+const { createExpressMiddleware } = require("../lib")
+const {
+  ValidationError,
+  SpecNotFoundError,
+  AJVValidationError
+} = require("../lib/errors")
 
 module.exports.createExpressApp = async middlewareOptions => {
   const app = express()
@@ -30,11 +35,25 @@ module.exports.createExpressApp = async middlewareOptions => {
   app.get("/echo", (req, res) => {
     res.send({})
   })
+  app.get("/v1/response-schema-extra-data", (req, res) => {
+    const { name } = req.query
+    res.send({
+      meta: {
+        status: 200
+      },
+      whoareyou: name,
+      data: {
+        name
+      }
+    })
+  })
   app.use((err, req, res, next) => {
     if (err instanceof ValidationError) {
       res.status(400)
     } else if (err instanceof SpecNotFoundError) {
       res.status(404)
+    } else if (err instanceof AJVValidationError) {
+      res.status(400)
     } else {
       res.status(500)
     }

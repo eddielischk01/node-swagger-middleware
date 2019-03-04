@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/davidNHK/node-swagger-middleware/compare/v0.3.2...v0.4.0) (2019-01-28)
+
+
+### Features
+
+* disable default status code on response ([53b0ef0](https://github.com/davidNHK/node-swagger-middleware/commit/53b0ef0))
+
+
+
+<a name="0.3.2"></a>
+## [0.3.2](https://github.com/davidNHK/node-swagger-middleware/compare/v0.3.1...v0.3.2) (2019-01-28)
+
+
+### Bug Fixes
+
+* missing return when route not found ([9d1120e](https://github.com/davidNHK/node-swagger-middleware/commit/9d1120e))
+
+
+
+<a name="0.3.1"></a>
+## [0.3.1](https://github.com/davidNHK/node-swagger-middleware/compare/v0.3.0...v0.3.1) (2019-01-28)
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/davidNHK/node-swagger-middleware/compare/v0.2.1...v0.3.0) (2019-01-27)
 
