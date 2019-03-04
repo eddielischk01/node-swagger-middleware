@@ -1,5 +1,5 @@
 module.exports = {
   linters: {
-    "*.js": ["prettier --write", "yarn lint", "git add"]
+    "*.js": ["prettier --write", "eslint", "git add"]
   }
 }

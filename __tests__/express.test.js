@@ -1,4 +1,5 @@
 const request = require("supertest")
+
 const { createExpressApp } = require("./expressApp")
 
 describe("Test Express Middleware", () => {
@@ -17,25 +18,30 @@ describe("Test Express Middleware", () => {
       },
       middlewareOptions: {
         strictMode: false
+      },
+      ajvOptions: {
+        removeAdditional: true,
+        useDefaults: true,
+        coerceTypes: true
       }
     })
   })
-  test("Get a path has described on OpenAPI", async () => {
+  it("Get a path has described on OpenAPI", async () => {
     const response = await request(app).get("/v1/whoami?name=davidng")
     expect(response.status).toEqual(200)
   })
 
-  test("Get a path has described on OpenAPI but missing parameter", async () => {
+  it("Get a path has described on OpenAPI but missing parameter", async () => {
     const response = await request(app).get("/v1/whoami")
     expect(response.status).toEqual(400)
   })
 
-  test("Get a path not described on OpenAPI in default mode", async () => {
+  it("Get a path not described on OpenAPI in default mode", async () => {
     const response = await request(app).get("/echo")
     expect(response.status).toEqual(200)
   })
 
-  test("Get a path not described on OpenAPI in strict mode", async () => {
+  it("Get a path not described on OpenAPI in strict mode", async () => {
     const app = await createExpressApp({
       middlewareOptions: {
         strictMode: true
@@ -45,10 +51,22 @@ describe("Test Express Middleware", () => {
     expect(response.status).toEqual(404)
   })
 
-  test("Get a path has described on OpenAPI but response schema not match", async () => {
+  it("Get a path has described on OpenAPI but response schema not match", async () => {
     const response = await request(app).get(
       "/v1/response-schema-mismatch?name=davidng"
     )
     expect(response.status).toEqual(400)
+  })
+
+  it("Get a path has described on OpenAPI but and get extra data", async () => {
+    const response = await request(app).get(
+      "/v1/response-schema-extra-data?name=davidng"
+    )
+    expect(response.body).toEqual({
+      meta: {
+        status: 200
+      },
+      whoareyou: "davidng"
+    })
   })
 })
