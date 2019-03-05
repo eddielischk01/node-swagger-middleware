@@ -64,3 +64,26 @@ paths:
               whoareyou:
                 type: string
             additionalProperties: false
+  /response-schema-extra-data-with-content-type:
+    get:
+      parameters:
+        - in: query
+          name: name
+          required: true
+          type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    properties:
+                      status:
+                        type: number
+                    additionalProperties: false
+                  whoareyou:
+                    type: string
+                additionalProperties: false
