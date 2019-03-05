@@ -69,4 +69,16 @@ describe("Test Express Middleware", () => {
       whoareyou: "davidng"
     })
   })
+
+  it("Get a path has described on OpenAPI but and get extra data schema include content type", async () => {
+    const response = await request(app).get(
+      "/v1/response-schema-extra-data-with-content-type?name=davidng"
+    )
+    expect(response.body).toEqual({
+      meta: {
+        status: 200
+      },
+      whoareyou: "davidng"
+    })
+  })
 })

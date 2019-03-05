@@ -47,6 +47,18 @@ module.exports.createExpressApp = async middlewareOptions => {
       }
     })
   })
+  app.get("/v1/response-schema-extra-data-with-content-type", (req, res) => {
+    const { name } = req.query
+    res.send({
+      meta: {
+        status: 200
+      },
+      whoareyou: name,
+      data: {
+        name
+      }
+    })
+  })
   app.use((err, req, res, next) => {
     if (err instanceof ValidationError) {
       res.status(400)
